@@ -1,0 +1,1667 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mosabbir Hossain | Cybersecurity Engineer & Red Team Specialist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --black: #020408;
+  --dark: #060d14;
+  --panel: #0a1628;
+  --panel2: #0d1f35;
+  --green: #00ff88;
+  --green2: #00cc6a;
+  --cyan: #00d4ff;
+  --red: #ff3366;
+  --yellow: #ffd700;
+  --white: #e8f4f8;
+  --muted: #4a7a9b;
+  --border: rgba(0,212,255,0.15);
+  --glow: 0 0 20px rgba(0,255,136,0.3);
+  --glow-cyan: 0 0 20px rgba(0,212,255,0.4);
+  --font-mono: 'Share Tech Mono', monospace;
+  --font-body: 'Rajdhani', sans-serif;
+  --font-head: 'Orbitron', sans-serif;
+}
+
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+
+body {
+  background: var(--black);
+  color: var(--white);
+  font-family: var(--font-body);
+  overflow-x: hidden;
+  cursor: crosshair;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:4px;}
+::-webkit-scrollbar-track{background:var(--dark);}
+::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px;}
+
+/* ── MATRIX CANVAS ── */
+#matrix-bg {
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  z-index:0;opacity:0.04;pointer-events:none;
+}
+
+/* ── SCANLINES ── */
+body::after {
+  content:'';position:fixed;top:0;left:0;width:100%;height:100%;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);
+  pointer-events:none;z-index:1;
+}
+
+/* ── NAV ── */
+nav {
+  position:fixed;top:0;left:0;right:0;z-index:1000;
+  background:rgba(2,4,8,0.92);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+  padding:0 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  height:64px;
+}
+.nav-logo {
+  font-family:var(--font-head);
+  font-size:1.1rem;
+  color:var(--green);
+  letter-spacing:2px;
+  text-decoration:none;
+}
+.nav-logo span{color:var(--cyan);}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a {
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  color:var(--muted);
+  text-decoration:none;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  transition:color 0.2s;
+  position:relative;
+}
+.nav-links a::before{content:'> ';color:var(--green);opacity:0;transition:opacity 0.2s;}
+.nav-links a:hover{color:var(--green);}
+.nav-links a:hover::before{opacity:1;}
+.nav-cta {
+  background:transparent;
+  border:1px solid var(--green);
+  color:var(--green);
+  font-family:var(--font-mono);
+  font-size:0.7rem;
+  padding:8px 18px;
+  cursor:crosshair;
+  letter-spacing:2px;
+  text-transform:uppercase;
+  transition:all 0.3s;
+  text-decoration:none;
+}
+.nav-cta:hover{background:var(--green);color:var(--black);box-shadow:var(--glow);}
+
+/* ── HERO ── */
+#hero {
+  min-height:100vh;
+  display:flex;align-items:center;
+  padding:0 5%;
+  position:relative;
+  z-index:2;
+}
+.hero-grid {
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:4rem;align-items:center;
+  max-width:1200px;margin:0 auto;width:100%;
+}
+.hero-tag {
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  color:var(--green);
+  letter-spacing:3px;
+  margin-bottom:1.2rem;
+  opacity:0;animation:fadeUp 0.6s 0.2s forwards;
+}
+.hero-tag::before{content:'[ ';} .hero-tag::after{content:' ]';}
+h1.hero-name {
+  font-family:var(--font-head);
+  font-size:clamp(2.2rem,4vw,3.8rem);
+  font-weight:900;
+  line-height:1.05;
+  color:var(--white);
+  margin-bottom:0.5rem;
+  opacity:0;animation:fadeUp 0.6s 0.4s forwards;
+}
+h1.hero-name .accent{color:var(--green);}
+.hero-title {
+  font-family:var(--font-mono);
+  font-size:0.9rem;
+  color:var(--cyan);
+  margin-bottom:1.5rem;
+  opacity:0;animation:fadeUp 0.6s 0.6s forwards;
+}
+.hero-desc {
+  font-size:1rem;
+  color:var(--muted);
+  line-height:1.7;
+  max-width:480px;
+  margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp 0.6s 0.8s forwards;
+}
+.hero-stats {
+  display:flex;gap:2.5rem;margin-bottom:2.5rem;
+  opacity:0;animation:fadeUp 0.6s 1s forwards;
+}
+.stat-item{text-align:left;}
+.stat-num {
+  font-family:var(--font-head);
+  font-size:2rem;font-weight:700;
+  color:var(--green);
+  line-height:1;
+}
+.stat-label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:2px;}
+.hero-btns {
+  display:flex;gap:1rem;
+  opacity:0;animation:fadeUp 0.6s 1.2s forwards;
+}
+.btn-primary {
+  background:var(--green);color:var(--black);
+  font-family:var(--font-mono);font-size:0.75rem;
+  padding:13px 28px;border:none;cursor:crosshair;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.3s;text-decoration:none;display:inline-block;
+  font-weight:700;
+}
+.btn-primary:hover{background:var(--green2);box-shadow:var(--glow);transform:translateY(-2px);}
+.btn-secondary {
+  background:transparent;color:var(--cyan);
+  font-family:var(--font-mono);font-size:0.75rem;
+  padding:13px 28px;border:1px solid var(--cyan);cursor:crosshair;
+  letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.3s;text-decoration:none;display:inline-block;
+}
+.btn-secondary:hover{background:rgba(0,212,255,0.1);box-shadow:var(--glow-cyan);}
+
+/* TERMINAL CARD */
+.hero-terminal {
+  background:var(--panel);
+  border:1px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  opacity:0;animation:fadeUp 0.8s 0.5s forwards;
+  box-shadow:0 0 60px rgba(0,212,255,0.08);
+}
+.terminal-header {
+  background:var(--panel2);
+  padding:10px 16px;
+  display:flex;align-items:center;gap:8px;
+  border-bottom:1px solid var(--border);
+}
+.t-dot{width:10px;height:10px;border-radius:50%;}
+.t-dot:nth-child(1){background:#ff5f57;}
+.t-dot:nth-child(2){background:#febc2e;}
+.t-dot:nth-child(3){background:#28c840;}
+.terminal-title{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);margin-left:8px;letter-spacing:1px;}
+.terminal-body{padding:1.5rem;font-family:var(--font-mono);font-size:0.78rem;line-height:2;}
+.t-line{display:block;margin-bottom:2px;}
+.t-prompt{color:var(--green);}
+.t-cmd{color:var(--white);}
+.t-out{color:var(--muted);}
+.t-green{color:var(--green);}
+.t-cyan{color:var(--cyan);}
+.t-red{color:var(--red);}
+.t-yellow{color:var(--yellow);}
+.t-cursor{display:inline-block;width:8px;height:14px;background:var(--green);animation:blink 1s infinite;vertical-align:middle;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+/* ── SECTION BASE ── */
+section{padding:6rem 5%;position:relative;z-index:2;}
+.section-header{text-align:center;margin-bottom:4rem;}
+.section-tag {
+  font-family:var(--font-mono);font-size:0.7rem;
+  color:var(--green);letter-spacing:4px;text-transform:uppercase;
+  margin-bottom:0.8rem;display:block;
+}
+.section-title {
+  font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.8rem);
+  font-weight:700;color:var(--white);margin-bottom:1rem;
+}
+.section-title span{color:var(--green);}
+.section-line {
+  width:60px;height:2px;
+  background:linear-gradient(90deg,var(--green),var(--cyan));
+  margin:0 auto;
+}
+
+/* ── ABOUT ── */
+#about{background:var(--dark);}
+.about-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:4rem;align-items:start;max-width:1100px;margin:0 auto;}
+.about-photo-wrap{position:relative;}
+.about-photo {
+  width:100%;aspect-ratio:1;
+  background:var(--panel);
+  border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:5rem;
+  position:relative;overflow:hidden;
+}
+.about-photo::before {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,255,136,0.05),rgba(0,212,255,0.05));
+}
+.photo-corner {
+  position:absolute;width:20px;height:20px;border-color:var(--green);border-style:solid;
+}
+.photo-corner.tl{top:-1px;left:-1px;border-width:2px 0 0 2px;}
+.photo-corner.tr{top:-1px;right:-1px;border-width:2px 2px 0 0;}
+.photo-corner.bl{bottom:-1px;left:-1px;border-width:0 0 2px 2px;}
+.photo-corner.br{bottom:-1px;right:-1px;border-width:0 2px 2px 0;}
+.badge-float {
+  position:absolute;bottom:-16px;right:-16px;
+  background:var(--panel2);border:1px solid var(--green);
+  padding:12px 16px;font-family:var(--font-mono);font-size:0.65rem;
+  color:var(--green);letter-spacing:1px;
+}
+.about-content h2{font-family:var(--font-head);font-size:1.8rem;color:var(--white);margin-bottom:1rem;}
+.about-content p{color:var(--muted);line-height:1.8;margin-bottom:1.5rem;font-size:1rem;}
+.about-skills{display:flex;flex-wrap:wrap;gap:0.5rem;margin-top:1.5rem;}
+.skill-tag {
+  font-family:var(--font-mono);font-size:0.65rem;
+  background:rgba(0,255,136,0.05);
+  border:1px solid rgba(0,255,136,0.2);
+  color:var(--green);padding:5px 12px;letter-spacing:1px;
+  transition:all 0.3s;
+}
+.skill-tag:hover{background:rgba(0,255,136,0.15);box-shadow:var(--glow);}
+
+/* ── EXPERTISE ── */
+#expertise{background:var(--black);}
+.expertise-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
+.expertise-card {
+  background:var(--panel);
+  border:1px solid var(--border);
+  padding:2rem;
+  position:relative;overflow:hidden;
+  transition:all 0.3s;
+  cursor:default;
+}
+.expertise-card::before {
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--green),var(--cyan));
+  transform:scaleX(0);transition:transform 0.3s;
+}
+.expertise-card:hover{border-color:rgba(0,255,136,0.3);transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+.expertise-card:hover::before{transform:scaleX(1);}
+.card-icon{font-size:2.5rem;margin-bottom:1rem;}
+.card-num {
+  position:absolute;top:1.5rem;right:1.5rem;
+  font-family:var(--font-head);font-size:2rem;font-weight:900;
+  color:rgba(0,255,136,0.06);
+}
+.card-title{font-family:var(--font-head);font-size:1rem;color:var(--white);margin-bottom:0.8rem;}
+.card-desc{font-family:var(--font-body);font-size:0.9rem;color:var(--muted);line-height:1.7;}
+.card-tools{margin-top:1rem;display:flex;flex-wrap:wrap;gap:5px;}
+.tool-chip{font-family:var(--font-mono);font-size:0.6rem;color:var(--cyan);background:rgba(0,212,255,0.08);border:1px solid rgba(0,212,255,0.15);padding:3px 8px;}
+
+/* ── BLOG / MEDIA ── */
+#blog{background:var(--dark);}
+.blog-tabs{display:flex;gap:0;margin-bottom:3rem;border-bottom:1px solid var(--border);max-width:1100px;margin-left:auto;margin-right:auto;}
+.blog-tab {
+  font-family:var(--font-mono);font-size:0.72rem;
+  padding:12px 24px;cursor:crosshair;
+  background:transparent;border:none;color:var(--muted);
+  letter-spacing:2px;text-transform:uppercase;
+  border-bottom:2px solid transparent;margin-bottom:-1px;
+  transition:all 0.3s;
+}
+.blog-tab.active{color:var(--green);border-bottom-color:var(--green);}
+.blog-tab:hover{color:var(--white);}
+.blog-content{display:none;max-width:1100px;margin:0 auto;}
+.blog-content.active{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.blog-card {
+  background:var(--panel);border:1px solid var(--border);
+  overflow:hidden;transition:all 0.3s;text-decoration:none;display:block;
+}
+.blog-card:hover{border-color:rgba(0,255,136,0.3);transform:translateY(-4px);}
+.blog-card-img {
+  height:160px;background:var(--panel2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:2.5rem;
+  border-bottom:1px solid var(--border);
+  position:relative;overflow:hidden;
+}
+.blog-card-img::after {
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(0,255,136,0.05),rgba(0,212,255,0.05));
+}
+.blog-card-body{padding:1.2rem;}
+.blog-cat{font-family:var(--font-mono);font-size:0.6rem;color:var(--cyan);letter-spacing:2px;margin-bottom:0.5rem;}
+.blog-title{font-family:var(--font-head);font-size:0.9rem;color:var(--white);margin-bottom:0.7rem;line-height:1.4;}
+.blog-excerpt{font-size:0.82rem;color:var(--muted);line-height:1.6;margin-bottom:1rem;}
+.blog-meta{display:flex;justify-content:space-between;align-items:center;}
+.blog-date{font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);}
+.blog-read{font-family:var(--font-mono);font-size:0.6rem;color:var(--green);}
+.blog-cta-wrap{text-align:center;margin-top:2.5rem;max-width:1100px;margin-left:auto;margin-right:auto;}
+
+/* ── YOUTUBE ── */
+#youtube{background:var(--black);}
+.yt-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:4rem;align-items:center;max-width:1100px;margin:0 auto;}
+.yt-player {
+  background:var(--panel);border:1px solid var(--border);
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
+  position:relative;overflow:hidden;cursor:crosshair;
+}
+.yt-player::before{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,0,0,0.05),rgba(0,0,0,0));
+}
+.yt-play{font-size:4rem;z-index:1;}
+.yt-overlay{
+  position:absolute;inset:0;background:rgba(0,0,0,0.4);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;
+}
+.yt-overlay-btn {
+  background:#ff0000;color:white;
+  font-family:var(--font-mono);font-size:0.75rem;
+  padding:12px 28px;border:none;cursor:crosshair;letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.3s;text-decoration:none;
+}
+.yt-overlay-btn:hover{background:#cc0000;box-shadow:0 0 20px rgba(255,0,0,0.4);}
+.yt-info h3{font-family:var(--font-head);font-size:1.5rem;color:var(--white);margin-bottom:1rem;}
+.yt-info p{color:var(--muted);line-height:1.8;margin-bottom:1.5rem;}
+.yt-stats{display:flex;gap:2rem;margin-bottom:2rem;}
+.yt-stat-num{font-family:var(--font-head);font-size:1.8rem;color:#ff0000;}
+.yt-stat-label{font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);}
+.recent-videos{margin-top:2.5rem;}
+.recent-videos h4{font-family:var(--font-mono);font-size:0.7rem;color:var(--muted);letter-spacing:3px;margin-bottom:1.2rem;text-transform:uppercase;}
+.video-list{display:flex;flex-direction:column;gap:0.8rem;}
+.video-item {
+  display:flex;align-items:center;gap:1rem;
+  padding:0.8rem;background:var(--panel);border:1px solid var(--border);
+  cursor:crosshair;transition:all 0.3s;text-decoration:none;
+}
+.video-item:hover{border-color:rgba(255,0,0,0.3);background:var(--panel2);}
+.video-thumb{width:60px;height:40px;background:var(--panel2);display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;}
+.video-info{flex:1;}
+.video-title{font-family:var(--font-body);font-size:0.82rem;color:var(--white);margin-bottom:3px;}
+.video-views{font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);}
+
+/* ── COURSES ── */
+#courses{background:var(--dark);}
+.courses-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
+.course-card {
+  background:var(--panel);border:1px solid var(--border);
+  overflow:hidden;transition:all 0.3s;position:relative;
+}
+.course-card:hover{border-color:rgba(0,255,136,0.4);transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,0.5);}
+.course-badge {
+  position:absolute;top:16px;right:16px;
+  font-family:var(--font-mono);font-size:0.6rem;
+  padding:4px 10px;letter-spacing:1px;text-transform:uppercase;
+}
+.badge-hot{background:var(--red);color:white;}
+.badge-new{background:var(--green);color:var(--black);}
+.badge-popular{background:var(--cyan);color:var(--black);}
+.course-header{
+  padding:1.5rem;background:var(--panel2);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:1rem;
+}
+.course-icon{font-size:2rem;}
+.course-level{font-family:var(--font-mono);font-size:0.6rem;color:var(--yellow);letter-spacing:2px;}
+.course-name{font-family:var(--font-head);font-size:1rem;color:var(--white);}
+.course-body{padding:1.5rem;}
+.course-desc{color:var(--muted);font-size:0.88rem;line-height:1.7;margin-bottom:1.2rem;}
+.course-features{list-style:none;margin-bottom:1.5rem;}
+.course-features li{font-family:var(--font-mono);font-size:0.67rem;color:var(--muted);padding:4px 0;border-bottom:1px solid rgba(255,255,255,0.03);}
+.course-features li::before{content:'✓ ';color:var(--green);}
+.course-footer{display:flex;align-items:center;justify-content:space-between;padding-top:1rem;border-top:1px solid var(--border);}
+.course-price{font-family:var(--font-head);font-size:1.4rem;color:var(--green);}
+.course-price span{font-size:0.75rem;color:var(--muted);}
+.course-btn {
+  font-family:var(--font-mono);font-size:0.65rem;
+  padding:8px 16px;background:transparent;
+  border:1px solid var(--green);color:var(--green);
+  cursor:crosshair;letter-spacing:1px;text-transform:uppercase;
+  transition:all 0.3s;text-decoration:none;
+}
+.course-btn:hover{background:var(--green);color:var(--black);}
+
+/* ── TRAINER HIRE ── */
+#hire{background:var(--black);}
+.hire-container{max-width:1100px;margin:0 auto;}
+.hire-intro{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center;margin-bottom:4rem;}
+.hire-intro h3{font-family:var(--font-head);font-size:1.6rem;color:var(--white);margin-bottom:1rem;}
+.hire-intro p{color:var(--muted);line-height:1.8;}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;}
+.pricing-card {
+  background:var(--panel);border:1px solid var(--border);
+  padding:2rem;text-align:center;position:relative;
+  transition:all 0.3s;
+}
+.pricing-card.featured {
+  border-color:var(--green);
+  background:linear-gradient(135deg,var(--panel),rgba(0,255,136,0.04));
+}
+.pricing-card.featured::before{
+  content:'MOST POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+  background:var(--green);color:var(--black);font-family:var(--font-mono);
+  font-size:0.6rem;padding:4px 14px;letter-spacing:2px;
+}
+.pricing-card:hover{transform:translateY(-4px);box-shadow:0 20px 40px rgba(0,0,0,0.4);}
+.pricing-plan{font-family:var(--font-mono);font-size:0.7rem;color:var(--cyan);letter-spacing:3px;margin-bottom:1rem;text-transform:uppercase;}
+.pricing-price{font-family:var(--font-head);font-size:2.5rem;color:var(--green);margin-bottom:0.3rem;}
+.pricing-price sub{font-size:1rem;color:var(--muted);}
+.pricing-duration{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);margin-bottom:1.5rem;}
+.pricing-features{list-style:none;text-align:left;margin-bottom:2rem;}
+.pricing-features li{font-size:0.85rem;color:var(--muted);padding:7px 0;border-bottom:1px solid rgba(255,255,255,0.04);display:flex;align-items:center;gap:8px;}
+.pricing-features li::before{content:'▶';color:var(--green);font-size:0.5rem;flex-shrink:0;}
+.pricing-btn {
+  width:100%;font-family:var(--font-mono);font-size:0.7rem;
+  padding:12px;background:transparent;
+  border:1px solid var(--green);color:var(--green);
+  cursor:crosshair;letter-spacing:2px;text-transform:uppercase;
+  transition:all 0.3s;
+}
+.pricing-btn:hover{background:var(--green);color:var(--black);box-shadow:var(--glow);}
+.pricing-card.featured .pricing-btn{background:var(--green);color:var(--black);}
+.custom-note {
+  text-align:center;margin-top:2.5rem;padding:1.5rem;
+  background:var(--panel);border:1px dashed rgba(0,255,136,0.2);
+  font-family:var(--font-mono);font-size:0.78rem;color:var(--muted);
+}
+.custom-note a{color:var(--green);text-decoration:none;}
+
+/* ── CONSULTING / CALENDAR ── */
+#consulting{background:var(--dark);}
+.consulting-container{max-width:1100px;margin:0 auto;}
+.consulting-intro{text-align:center;margin-bottom:3rem;}
+.consulting-intro p{color:var(--muted);font-size:1rem;max-width:600px;margin:1rem auto 0;}
+.consult-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:3rem;}
+.consult-services{display:flex;flex-direction:column;gap:1rem;}
+.consult-service {
+  background:var(--panel);border:1px solid var(--border);
+  padding:1.2rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  cursor:crosshair;transition:all 0.3s;
+  border-left:3px solid transparent;
+}
+.consult-service:hover,.consult-service.active{border-left-color:var(--green);background:var(--panel2);}
+.service-icon{font-size:1.5rem;flex-shrink:0;}
+.service-name{font-family:var(--font-head);font-size:0.9rem;color:var(--white);}
+.service-price{font-family:var(--font-mono);font-size:0.75rem;color:var(--green);}
+.service-dur{font-family:var(--font-mono);font-size:0.62rem;color:var(--muted);}
+
+/* CALENDAR */
+.calendar-widget{background:var(--panel);border:1px solid var(--border);padding:2rem;}
+.cal-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;}
+.cal-nav{background:none;border:1px solid var(--border);color:var(--muted);width:32px;height:32px;cursor:crosshair;font-size:0.9rem;transition:all 0.3s;}
+.cal-nav:hover{border-color:var(--green);color:var(--green);}
+.cal-month{font-family:var(--font-head);font-size:1rem;color:var(--white);}
+.cal-grid-header{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;margin-bottom:8px;}
+.cal-day-name{font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);text-align:center;padding:6px 0;}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.cal-day {
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-family:var(--font-mono);font-size:0.72rem;
+  cursor:crosshair;transition:all 0.2s;border:1px solid transparent;
+  color:var(--muted);
+}
+.cal-day.available{color:var(--white);}
+.cal-day.available:hover{background:rgba(0,255,136,0.1);border-color:var(--green);color:var(--green);}
+.cal-day.selected{background:var(--green);color:var(--black);font-weight:700;}
+.cal-day.today{border-color:rgba(0,212,255,0.3);color:var(--cyan);}
+.cal-day.past,.cal-day.disabled{opacity:0.2;cursor:not-allowed;}
+.time-slots{margin-top:1.5rem;}
+.time-slots h4{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:2px;margin-bottom:1rem;text-transform:uppercase;}
+.slots-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.time-slot {
+  font-family:var(--font-mono);font-size:0.65rem;
+  padding:8px;text-align:center;
+  background:var(--panel2);border:1px solid var(--border);
+  cursor:crosshair;transition:all 0.2s;color:var(--muted);
+}
+.time-slot.available{color:var(--white);}
+.time-slot.available:hover{border-color:var(--green);color:var(--green);background:rgba(0,255,136,0.05);}
+.time-slot.selected{background:var(--green);color:var(--black);border-color:var(--green);}
+.book-btn {
+  width:100%;margin-top:1.5rem;
+  font-family:var(--font-mono);font-size:0.75rem;
+  padding:14px;background:var(--green);
+  border:none;color:var(--black);cursor:crosshair;
+  letter-spacing:2px;text-transform:uppercase;font-weight:700;
+  transition:all 0.3s;
+}
+.book-btn:hover{background:var(--green2);box-shadow:var(--glow);}
+.book-btn:disabled{opacity:0.3;cursor:not-allowed;}
+
+/* ── COMMUNITY ── */
+#community{background:var(--black);}
+.community-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;max-width:1100px;margin:0 auto;}
+.community-card {
+  background:var(--panel);border:1px solid var(--border);
+  padding:1.8rem;display:flex;flex-direction:column;gap:1rem;
+  transition:all 0.3s;text-decoration:none;
+}
+.community-card:hover{border-color:rgba(0,255,136,0.3);transform:translateY(-4px);}
+.comm-platform{display:flex;align-items:center;gap:1rem;}
+.comm-icon{font-size:2rem;}
+.comm-name{font-family:var(--font-head);font-size:1rem;color:var(--white);}
+.comm-type{font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);}
+.comm-desc{color:var(--muted);font-size:0.85rem;line-height:1.6;}
+.comm-members{font-family:var(--font-mono);font-size:0.7rem;color:var(--green);}
+.comm-join {
+  font-family:var(--font-mono);font-size:0.65rem;
+  padding:8px 16px;background:transparent;
+  border:1px solid var(--border);color:var(--muted);
+  letter-spacing:1px;text-transform:uppercase;transition:all 0.3s;
+  text-align:center;
+}
+.community-card:hover .comm-join{border-color:var(--green);color:var(--green);}
+
+/* ── CONTACT / CTA ── */
+#contact{background:var(--dark);}
+.contact-container{max-width:800px;margin:0 auto;text-align:center;}
+.contact-container h2{font-family:var(--font-head);font-size:clamp(1.8rem,3vw,2.5rem);color:var(--white);margin-bottom:1rem;}
+.contact-container p{color:var(--muted);line-height:1.8;margin-bottom:3rem;}
+.contact-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:1rem;margin-bottom:3rem;}
+.contact-item{
+  background:var(--panel);border:1px solid var(--border);
+  padding:1.5rem;display:flex;align-items:center;gap:1rem;
+}
+.contact-item-icon{font-size:1.5rem;}
+.contact-label{font-family:var(--font-mono);font-size:0.6rem;color:var(--muted);text-transform:uppercase;letter-spacing:2px;}
+.contact-val{font-size:0.88rem;color:var(--white);}
+.contact-form{background:var(--panel);border:1px solid var(--border);padding:2.5rem;text-align:left;}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+.form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:1rem;}
+.form-group label{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.form-group input,.form-group textarea,.form-group select {
+  background:var(--dark);border:1px solid var(--border);
+  color:var(--white);font-family:var(--font-mono);font-size:0.78rem;
+  padding:12px;outline:none;transition:border-color 0.3s;
+  resize:none;
+}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--green);}
+.form-group select option{background:var(--dark);}
+.form-submit {
+  width:100%;font-family:var(--font-mono);font-size:0.75rem;
+  padding:14px;background:var(--green);
+  border:none;color:var(--black);cursor:crosshair;
+  letter-spacing:3px;text-transform:uppercase;font-weight:700;
+  transition:all 0.3s;
+}
+.form-submit:hover{background:var(--green2);box-shadow:var(--glow);}
+
+/* ── FOOTER ── */
+footer {
+  background:var(--black);border-top:1px solid var(--border);
+  padding:2rem 5%;
+  display:flex;align-items:center;justify-content:space-between;
+  position:relative;z-index:2;
+}
+.footer-logo{font-family:var(--font-head);font-size:0.9rem;color:var(--green);letter-spacing:2px;}
+.footer-copy{font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);}
+.footer-socials{display:flex;gap:1rem;}
+.footer-social{
+  font-family:var(--font-mono);font-size:0.65rem;
+  color:var(--muted);text-decoration:none;letter-spacing:1px;
+  transition:color 0.2s;
+}
+.footer-social:hover{color:var(--green);}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+.reveal{opacity:0;transform:translateY(30px);transition:opacity 0.7s,transform 0.7s;}
+.reveal.visible{opacity:1;transform:translateY(0);}
+
+/* ── GLITCH EFFECT ── */
+.glitch{position:relative;}
+.glitch::before,.glitch::after{
+  content:attr(data-text);
+  position:absolute;top:0;left:0;width:100%;height:100%;
+}
+.glitch::before{
+  color:var(--cyan);animation:glitch1 3s infinite;clip-path:polygon(0 0,100% 0,100% 35%,0 35%);
+}
+.glitch::after{
+  color:var(--red);animation:glitch2 3s infinite;clip-path:polygon(0 65%,100% 65%,100% 100%,0 100%);
+}
+@keyframes glitch1{0%,90%,100%{transform:translate(0);}92%{transform:translate(-2px,1px);}94%{transform:translate(2px,-1px);}96%{transform:translate(-1px,2px);}}
+@keyframes glitch2{0%,90%,100%{transform:translate(0);}92%{transform:translate(2px,-1px);}94%{transform:translate(-2px,1px);}96%{transform:translate(1px,-2px);}}
+
+/* ── PROGRESS BARS ── */
+.skill-bars{margin-top:1.5rem;}
+.skill-bar-item{margin-bottom:1rem;}
+.skill-bar-label{display:flex;justify-content:space-between;font-family:var(--font-mono);font-size:0.65rem;color:var(--muted);margin-bottom:5px;}
+.skill-bar-track{background:var(--panel2);height:4px;position:relative;}
+.skill-bar-fill{height:4px;background:linear-gradient(90deg,var(--green),var(--cyan));width:0;transition:width 1.5s ease;}
+
+/* ── NOTIFICATION TOAST ── */
+.toast{
+  position:fixed;bottom:2rem;right:2rem;z-index:9999;
+  background:var(--panel);border:1px solid var(--green);
+  font-family:var(--font-mono);font-size:0.75rem;color:var(--green);
+  padding:1rem 1.5rem;transform:translateX(200%);transition:transform 0.3s;
+}
+.toast.show{transform:translateX(0);}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .hero-grid,.about-grid,.hire-intro,.consult-grid,.yt-grid{grid-template-columns:1fr;}
+  .expertise-grid,.courses-grid,.pricing-grid,.community-grid,.blog-content.active{grid-template-columns:1fr 1fr;}
+  .contact-grid,.form-row{grid-template-columns:1fr;}
+  .nav-links{display:none;}
+  .hero-stats{gap:1.5rem;}
+}
+@media(max-width:480px){
+  .expertise-grid,.courses-grid,.pricing-grid,.community-grid,.blog-content.active{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<canvas id="matrix-bg"></canvas>
+
+<!-- ── NAV ── -->
+<nav>
+  <a href="#hero" class="nav-logo">MOSH<span>SEC</span></a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#expertise">Skills</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#youtube">YouTube</a></li>
+    <li><a href="#courses">Courses</a></li>
+    <li><a href="#hire">Hire Me</a></li>
+    <li><a href="#consulting">Consulting</a></li>
+    <li><a href="#community">Community</a></li>
+  </ul>
+  <a href="#consulting" class="nav-cta">Book Session</a>
+</nav>
+
+<!-- ── HERO ── -->
+<section id="hero">
+  <div class="hero-grid">
+    <div>
+      <p class="hero-tag">Ethical Hacker · Red Team · SOC Engineer</p>
+      <h1 class="hero-name glitch" data-text="MOSABBIR HOSSAIN">MOSABBIR<br><span class="accent">HOSSAIN</span></h1>
+      <p class="hero-title">// Senior Cybersecurity Engineer &amp; Red Team Specialist</p>
+      <p class="hero-desc">I break systems before the bad guys do. SOC architect, penetration tester, red team operator, and founder of Hack To Live Academy — protecting enterprises and training the next generation of defenders.</p>
+      <div class="hero-stats">
+        <div class="stat-item">
+          <div class="stat-num">5+</div>
+          <div class="stat-label">YRS EXPERIENCE</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">2.5K+</div>
+          <div class="stat-label">ENDPOINTS SECURED</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">300+</div>
+          <div class="stat-label">STUDENTS TRAINED</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-num">50+</div>
+          <div class="stat-label">PENTEST PROJECTS</div>
+        </div>
+      </div>
+      <div class="hero-btns">
+        <a href="#consulting" class="btn-primary">Book a Session</a>
+        <a href="#courses" class="btn-secondary">View Courses</a>
+      </div>
+    </div>
+    <div class="hero-terminal">
+      <div class="terminal-header">
+        <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+        <span class="terminal-title">mosabbir@kali:~$ — bash</span>
+      </div>
+      <div class="terminal-body">
+        <span class="t-line"><span class="t-prompt">mosabbir@kali:~$</span> <span class="t-cmd">whoami</span></span>
+        <span class="t-line"><span class="t-green">Senior Cybersecurity Engineer | Red Team Operator</span></span>
+        <span class="t-line">&nbsp;</span>
+        <span class="t-line"><span class="t-prompt">mosabbir@kali:~$</span> <span class="t-cmd">cat certifications.txt</span></span>
+        <span class="t-line"><span class="t-cyan">  [✓] CRTA - Altered Security (2025)</span></span>
+        <span class="t-line"><span class="t-cyan">  [✓] CEH Practical - EC-Council (2023)</span></span>
+        <span class="t-line"><span class="t-cyan">  [✓] eJPT - INE/eLearnSecurity (2023)</span></span>
+        <span class="t-line"><span class="t-yellow">  [⏳] OSCP+ - Scheduled Mar 2026</span></span>
+        <span class="t-line">&nbsp;</span>
+        <span class="t-line"><span class="t-prompt">mosabbir@kali:~$</span> <span class="t-cmd">nmap -sV target.network</span></span>
+        <span class="t-line"><span class="t-green">Starting Nmap 7.95</span></span>
+        <span class="t-line"><span class="t-out">22/tcp  open  ssh     OpenSSH 8.4</span></span>
+        <span class="t-line"><span class="t-out">80/tcp  open  http    Apache 2.4.51</span></span>
+        <span class="t-line"><span class="t-red">443/tcp open  https   VULNERABLE CVE-2021-44228</span></span>
+        <span class="t-line">&nbsp;</span>
+        <span class="t-line"><span class="t-prompt">mosabbir@kali:~$</span> <span class="t-cursor"></span></span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── ABOUT ── -->
+<section id="about">
+  <div class="section-header reveal">
+    <span class="section-tag">// 001 — Identity</span>
+    <h2 class="section-title">About <span>Me</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="about-grid">
+    <div class="about-photo-wrap reveal">
+      <div class="about-photo">
+        🛡️
+        <div class="photo-corner tl"></div>
+        <div class="photo-corner tr"></div>
+        <div class="photo-corner bl"></div>
+        <div class="photo-corner br"></div>
+      </div>
+      <div class="badge-float">ZERO BREACH RECORD</div>
+    </div>
+    <div class="about-content reveal">
+      <h2>Hack To Defend. Teach To Protect.</h2>
+      <p>I'm <strong style="color:var(--white)">MD Mosabbir Hossain</strong> — a Senior Cybersecurity Engineer based in Dhaka, Bangladesh, with a deep obsession for offensive security and building unbreakable defenses. I currently lead SOC engineering at Betopia Group, protecting 2,500+ endpoints across 22 subsidiaries with <strong style="color:var(--green)">zero major breaches</strong>.</p>
+      <p>Beyond breaking systems, I founded <strong style="color:var(--cyan)">Hack To Live Academy</strong> — a cybersecurity training institution that has shaped 300+ security professionals and built a 1,000+ member community. I believe in learning by doing — every course I teach comes from real-world red team experience.</p>
+      <p>My approach: think like an attacker, defend like an architect.</p>
+      <div class="skill-bars">
+        <div class="skill-bar-item">
+          <div class="skill-bar-label"><span>Penetration Testing</span><span>95%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="95"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-label"><span>SOC / SIEM Engineering</span><span>90%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="90"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-label"><span>Red Team Operations</span><span>88%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="88"></div></div>
+        </div>
+        <div class="skill-bar-item">
+          <div class="skill-bar-label"><span>Cloud Security (AWS)</span><span>80%</span></div>
+          <div class="skill-bar-track"><div class="skill-bar-fill" data-width="80"></div></div>
+        </div>
+      </div>
+      <div class="about-skills">
+        <span class="skill-tag">Wazuh SIEM</span>
+        <span class="skill-tag">MITRE ATT&CK</span>
+        <span class="skill-tag">Burp Suite</span>
+        <span class="skill-tag">Metasploit</span>
+        <span class="skill-tag">Active Directory</span>
+        <span class="skill-tag">IBM QRadar</span>
+        <span class="skill-tag">AWS Security</span>
+        <span class="skill-tag">Threat Hunting</span>
+        <span class="skill-tag">Python / Bash</span>
+        <span class="skill-tag">FortiGate</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── EXPERTISE ── -->
+<section id="expertise">
+  <div class="section-header reveal">
+    <span class="section-tag">// 002 — Arsenal</span>
+    <h2 class="section-title">Core <span>Expertise</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="expertise-grid">
+    <div class="expertise-card reveal">
+      <span class="card-num">01</span>
+      <div class="card-icon">🔴</div>
+      <h3 class="card-title">Red Team Operations</h3>
+      <p class="card-desc">Full-scope adversarial simulations mimicking APT TTPs. I find what your defenders miss before real attackers do.</p>
+      <div class="card-tools"><span class="tool-chip">Metasploit</span><span class="tool-chip">Cobalt Strike</span><span class="tool-chip">BloodHound</span><span class="tool-chip">Mimikatz</span></div>
+    </div>
+    <div class="expertise-card reveal">
+      <span class="card-num">02</span>
+      <div class="card-icon">🌐</div>
+      <h3 class="card-title">Web &amp; API Pentesting</h3>
+      <p class="card-desc">OWASP Top 10, authentication bypass, API security, business logic flaws — comprehensive application security assessments.</p>
+      <div class="card-tools"><span class="tool-chip">Burp Suite Pro</span><span class="tool-chip">OWASP ZAP</span><span class="tool-chip">Nuclei</span></div>
+    </div>
+    <div class="expertise-card reveal">
+      <span class="card-num">03</span>
+      <div class="card-icon">🏰</div>
+      <h3 class="card-title">SOC Architecture</h3>
+      <p class="card-desc">Designing and deploying enterprise-grade Security Operations Centers. Detection engineering, SIEM tuning, zero-breach SOC operations.</p>
+      <div class="card-tools"><span class="tool-chip">Wazuh</span><span class="tool-chip">IBM QRadar</span><span class="tool-chip">ELK Stack</span></div>
+    </div>
+    <div class="expertise-card reveal">
+      <span class="card-num">04</span>
+      <div class="card-icon">☁️</div>
+      <h3 class="card-title">Cloud Security (AWS)</h3>
+      <p class="card-desc">IAM policy reviews, S3 bucket audits, VPC security, cloud-native threat detection, and infrastructure hardening on AWS.</p>
+      <div class="card-tools"><span class="tool-chip">AWS IAM</span><span class="tool-chip">ScoutSuite</span><span class="tool-chip">Prowler</span></div>
+    </div>
+    <div class="expertise-card reveal">
+      <span class="card-num">05</span>
+      <div class="card-icon">🪟</div>
+      <h3 class="card-title">Active Directory Attacks</h3>
+      <p class="card-desc">Kerberoasting, Pass-the-Hash, DCSync, BloodHound enumeration, and AD exploitation defense — from attack to remediation.</p>
+      <div class="card-tools"><span class="tool-chip">BloodHound</span><span class="tool-chip">Impacket</span><span class="tool-chip">CrackMapExec</span></div>
+    </div>
+    <div class="expertise-card reveal">
+      <span class="card-num">06</span>
+      <div class="card-icon">🕵️</div>
+      <h3 class="card-title">OSINT &amp; Threat Intel</h3>
+      <p class="card-desc">Open-source intelligence gathering, dark web monitoring, threat actor profiling, and reconnaissance automation.</p>
+      <div class="card-tools"><span class="tool-chip">Maltego</span><span class="tool-chip">Shodan</span><span class="tool-chip">Recon-ng</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── BLOG ── -->
+<section id="blog">
+  <div class="section-header reveal">
+    <span class="section-tag">// 003 — Knowledge Base</span>
+    <h2 class="section-title">Latest <span>Articles</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="blog-tabs reveal">
+    <button class="blog-tab active" onclick="switchTab('medium')">Medium Posts</button>
+    <button class="blog-tab" onclick="switchTab('hacktolive')">HackToLive Blog</button>
+  </div>
+
+  <div id="tab-medium" class="blog-content active">
+    <a href="https://medium.com/@mosabbirshemul" target="_blank" class="blog-card">
+      <div class="blog-card-img">🔐</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">SOC Engineering</div>
+        <h4 class="blog-title">Building a Zero-Breach Wazuh SOC for Enterprise Networks</h4>
+        <p class="blog-excerpt">How I deployed and tuned a Wazuh SIEM across 22 subsidiaries, covering 2,500+ endpoints with custom MITRE ATT&CK detection rules.</p>
+        <div class="blog-meta"><span class="blog-date">Medium · 2025</span><span class="blog-read">READ →</span></div>
+      </div>
+    </a>
+    <a href="https://medium.com/@mosabbirshemul" target="_blank" class="blog-card">
+      <div class="blog-card-img">💀</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Red Team</div>
+        <h4 class="blog-title">Active Directory Exploitation: From Initial Access to Domain Admin</h4>
+        <p class="blog-excerpt">A practical walkthrough of AD attack chains — Kerberoasting, BloodHound enumeration, lateral movement, and privilege escalation.</p>
+        <div class="blog-meta"><span class="blog-date">Medium · 2025</span><span class="blog-read">READ →</span></div>
+      </div>
+    </a>
+    <a href="https://medium.com/@mosabbirshemul" target="_blank" class="blog-card">
+      <div class="blog-card-img">☁️</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Cloud Security</div>
+        <h4 class="blog-title">AWS IAM Misconfigurations That Get Companies Breached</h4>
+        <p class="blog-excerpt">Real-world IAM policy mistakes I've found during cloud VAPT engagements — and how to fix them before attackers exploit them.</p>
+        <div class="blog-meta"><span class="blog-date">Medium · 2025</span><span class="blog-read">READ →</span></div>
+      </div>
+    </a>
+  </div>
+
+  <div id="tab-hacktolive" class="blog-content">
+    <a href="https://hacktolive.org" target="_blank" class="blog-card">
+      <div class="blog-card-img">🎯</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Ethical Hacking</div>
+        <h4 class="blog-title">eJPT to OSCP: My Complete Roadmap for Offensive Security</h4>
+        <p class="blog-excerpt">The exact path I followed from eJPT to CRTA to OSCP — resources, labs, methodology, and mindset shifts that matter most.</p>
+        <div class="blog-meta"><span class="blog-date">HackToLive · 2025</span><span class="blog-read">READ →</span></div>
+      </div>
+    </a>
+    <a href="https://hacktolive.org" target="_blank" class="blog-card">
+      <div class="blog-card-img">🧪</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Lab Writeups</div>
+        <h4 class="blog-title">TryHackMe vs HackTheBox: Which Platform for Bangladesh Students?</h4>
+        <p class="blog-excerpt">A deep comparison of both platforms from a trainer's perspective — which one builds real-world skills faster for beginners.</p>
+        <div class="blog-meta"><span class="blog-date">HackToLive · 2025</span><span class="blog-read">READ →</span></div>
+      </div>
+    </a>
+    <a href="https://hacktolive.org" target="_blank" class="blog-card">
+      <div class="blog-card-img">🛡️</div>
+      <div class="blog-card-body">
+        <div class="blog-cat">Blue Team</div>
+        <h4 class="blog-title">Detection Engineering: Writing Wazuh Rules That Actually Catch Attacks</h4>
+        <p class="blog-excerpt">How to write custom Wazuh detection rules for real attack patterns — with examples from live SOC deployments.</p>
+        <div class="blog-meta"><span class="blog-date">HackToLive · 2024</span><span class="blog-read">READ →</span></div>
+      </div>
+    </a>
+  </div>
+  <div class="blog-cta-wrap reveal">
+    <a href="https://medium.com/@mosabbirshemul" target="_blank" class="btn-secondary" style="margin-right:1rem;">All Medium Posts →</a>
+    <a href="https://hacktolive.org" target="_blank" class="btn-secondary">HackToLive Blog →</a>
+  </div>
+</section>
+
+<!-- ── YOUTUBE ── -->
+<section id="youtube">
+  <div class="section-header reveal">
+    <span class="section-tag">// 004 — Video Content</span>
+    <h2 class="section-title">YouTube <span>Channel</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="yt-grid">
+    <div>
+      <div class="yt-player reveal">
+        <div class="yt-overlay">
+          <div style="font-size:3rem">▶</div>
+          <a href="https://youtube.com/@hacktolive" target="_blank" class="yt-overlay-btn">Watch on YouTube</a>
+        </div>
+      </div>
+      <div class="yt-stats reveal" style="margin-top:1.5rem;">
+        <div class="stat-item">
+          <div class="yt-stat-num">1K+</div>
+          <div class="yt-stat-label">SUBSCRIBERS</div>
+        </div>
+        <div class="stat-item">
+          <div class="yt-stat-num">50+</div>
+          <div class="yt-stat-label">VIDEOS</div>
+        </div>
+        <div class="stat-item">
+          <div class="yt-stat-num">10K+</div>
+          <div class="yt-stat-label">TOTAL VIEWS</div>
+        </div>
+      </div>
+    </div>
+    <div class="reveal">
+      <h3 class="yt-info" style="font-family:var(--font-head);font-size:1.5rem;color:var(--white);margin-bottom:1rem;">Cybersecurity Education<br>on YouTube</h3>
+      <p style="color:var(--muted);line-height:1.8;margin-bottom:1.5rem;">I publish practical hacking tutorials, CTF walkthroughs, SOC engineering guides, and career advice for the cybersecurity community. Real skills. Real tools. Real scenarios.</p>
+      <a href="https://youtube.com/@hacktolive" target="_blank" class="btn-primary" style="background:#ff0000;border-color:#ff0000;margin-bottom:2rem;display:inline-block;">Subscribe →</a>
+      <div class="recent-videos">
+        <h4>Recent Videos</h4>
+        <div class="video-list">
+          <a href="https://youtube.com/@hacktolive" target="_blank" class="video-item">
+            <div class="video-thumb">🎯</div>
+            <div class="video-info">
+              <div class="video-title">Active Directory Attack Path Full Course</div>
+              <div class="video-views">Hack To Live Academy</div>
+            </div>
+          </a>
+          <a href="https://youtube.com/@hacktolive" target="_blank" class="video-item">
+            <div class="video-thumb">🔍</div>
+            <div class="video-info">
+              <div class="video-title">Wazuh SIEM Setup from Scratch</div>
+              <div class="video-views">Hack To Live Academy</div>
+            </div>
+          </a>
+          <a href="https://youtube.com/@hacktolive" target="_blank" class="video-item">
+            <div class="video-thumb">🌐</div>
+            <div class="video-info">
+              <div class="video-title">Web Application Pentest Methodology</div>
+              <div class="video-views">Hack To Live Academy</div>
+            </div>
+          </a>
+          <a href="https://youtube.com/@hacktolive" target="_blank" class="video-item">
+            <div class="video-thumb">☁️</div>
+            <div class="video-info">
+              <div class="video-title">AWS Penetration Testing Guide 2025</div>
+              <div class="video-views">Hack To Live Academy</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COURSES ── -->
+<section id="courses">
+  <div class="section-header reveal">
+    <span class="section-tag">// 005 — Hack To Live Academy</span>
+    <h2 class="section-title">My <span>Courses</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="courses-grid">
+    <div class="course-card reveal">
+      <span class="course-badge badge-hot">HOT</span>
+      <div class="course-header">
+        <div class="course-icon">🔴</div>
+        <div>
+          <div class="course-level">INTERMEDIATE → ADVANCED</div>
+          <div class="course-name">Red Team Operations</div>
+        </div>
+      </div>
+      <div class="course-body">
+        <p class="course-desc">End-to-end offensive security course. From initial recon to domain compromise — real attack chains in lab environments.</p>
+        <ul class="course-features">
+          <li>Reconnaissance & OSINT</li>
+          <li>Exploitation & Post-Exploitation</li>
+          <li>Active Directory Attacks</li>
+          <li>C2 Frameworks & Evasion</li>
+          <li>Reporting & CVSS Scoring</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">৳4,999<span>/course</span></div>
+          <a href="https://hacktolive.org" target="_blank" class="course-btn">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="course-card reveal">
+      <span class="course-badge badge-new">NEW</span>
+      <div class="course-header">
+        <div class="course-icon">🏰</div>
+        <div>
+          <div class="course-level">BEGINNER → INTERMEDIATE</div>
+          <div class="course-name">SOC Engineering & Blue Team</div>
+        </div>
+      </div>
+      <div class="course-body">
+        <p class="course-desc">Build and run a real SOC. Learn SIEM deployment, detection engineering, incident response, and threat hunting.</p>
+        <ul class="course-features">
+          <li>Wazuh SIEM Deployment</li>
+          <li>Custom Detection Rules</li>
+          <li>MITRE ATT&CK Mapping</li>
+          <li>Incident Response Playbooks</li>
+          <li>Threat Hunting Techniques</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">৳3,999<span>/course</span></div>
+          <a href="https://hacktolive.org" target="_blank" class="course-btn">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="course-card reveal">
+      <span class="course-badge badge-popular">POPULAR</span>
+      <div class="course-header">
+        <div class="course-icon">🪟</div>
+        <div>
+          <div class="course-level">BEGINNER → ADVANCED</div>
+          <div class="course-name">Active Directory Security</div>
+        </div>
+      </div>
+      <div class="course-body">
+        <p class="course-desc">Master Active Directory from both attacker and defender perspectives. Lab-based, hands-on, real-world scenarios.</p>
+        <ul class="course-features">
+          <li>AD Enumeration & BloodHound</li>
+          <li>Kerberoasting & AS-REP Roasting</li>
+          <li>Pass-the-Hash & Pass-the-Ticket</li>
+          <li>DCSync & Golden Ticket</li>
+          <li>AD Hardening & Defense</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">৳3,499<span>/course</span></div>
+          <a href="https://hacktolive.org" target="_blank" class="course-btn">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-icon">🌐</div>
+        <div>
+          <div class="course-level">BEGINNER → INTERMEDIATE</div>
+          <div class="course-name">Web Application Pentesting</div>
+        </div>
+      </div>
+      <div class="course-body">
+        <p class="course-desc">OWASP Top 10 mastery, Burp Suite pro techniques, API security, and bug bounty methodology for real-world testing.</p>
+        <ul class="course-features">
+          <li>OWASP Top 10 Deep Dive</li>
+          <li>Burp Suite Pro Mastery</li>
+          <li>API Security Testing</li>
+          <li>Authentication Bypass</li>
+          <li>Bug Bounty Methodology</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">৳2,999<span>/course</span></div>
+          <a href="https://hacktolive.org" target="_blank" class="course-btn">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-icon">🕵️</div>
+        <div>
+          <div class="course-level">BEGINNER</div>
+          <div class="course-name">OSINT & Reconnaissance</div>
+        </div>
+      </div>
+      <div class="course-body">
+        <p class="course-desc">Master open-source intelligence gathering. Find what's exposed about any target before touching a single system.</p>
+        <ul class="course-features">
+          <li>Passive Recon Techniques</li>
+          <li>Social Media OSINT</li>
+          <li>Dark Web Monitoring</li>
+          <li>Maltego & Shodan</li>
+          <li>OSINT Automation</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">৳1,999<span>/course</span></div>
+          <a href="https://hacktolive.org" target="_blank" class="course-btn">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+    <div class="course-card reveal">
+      <div class="course-header">
+        <div class="course-icon">☁️</div>
+        <div>
+          <div class="course-level">INTERMEDIATE</div>
+          <div class="course-name">Cloud Security (AWS)</div>
+        </div>
+      </div>
+      <div class="course-body">
+        <p class="course-desc">AWS penetration testing, IAM misconfigurations, S3 security, cloud-native attack paths, and infrastructure hardening.</p>
+        <ul class="course-features">
+          <li>AWS Attack Surface Mapping</li>
+          <li>IAM Privilege Escalation</li>
+          <li>S3 Bucket Exploitation</li>
+          <li>Lambda & API Gateway Security</li>
+          <li>Cloud Hardening Best Practices</li>
+        </ul>
+        <div class="course-footer">
+          <div class="course-price">৳3,499<span>/course</span></div>
+          <a href="https://hacktolive.org" target="_blank" class="course-btn">Enroll Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center;margin-top:2.5rem;" class="reveal">
+    <a href="https://hacktolive.org" target="_blank" class="btn-primary">All Courses at HackToLive Academy →</a>
+  </div>
+</section>
+
+<!-- ── HIRE AS TRAINER ── -->
+<section id="hire">
+  <div class="section-header reveal">
+    <span class="section-tag">// 006 — Corporate Training</span>
+    <h2 class="section-title">Hire Me as <span>Trainer</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="hire-container">
+    <div class="hire-intro reveal">
+      <div>
+        <h3>Train Your Team. Build Real Defenders.</h3>
+        <p style="color:var(--muted);line-height:1.8;margin-bottom:1rem;">I deliver customized cybersecurity training for corporate teams, universities, and professional organizations. Every session is built from real-world red team experience — not just slides.</p>
+        <p style="color:var(--muted);line-height:1.8;">500+ professionals trained across Bangladesh. Customizable curriculum, hands-on labs, and measurable outcomes.</p>
+      </div>
+      <div class="about-skills">
+        <span class="skill-tag">On-site Training</span>
+        <span class="skill-tag">Online Sessions</span>
+        <span class="skill-tag">Custom Curriculum</span>
+        <span class="skill-tag">Hands-on Labs</span>
+        <span class="skill-tag">CTF Events</span>
+        <span class="skill-tag">Corporate Workshops</span>
+        <span class="skill-tag">University Seminars</span>
+        <span class="skill-tag">Certification Prep</span>
+      </div>
+    </div>
+    <div class="pricing-grid reveal">
+      <div class="pricing-card">
+        <div class="pricing-plan">Starter Session</div>
+        <div class="pricing-price">৳<sub></sub>Negotiable</div>
+        <div class="pricing-duration">Half-Day (4 Hours)</div>
+        <ul class="pricing-features">
+          <li>Single topic focus</li>
+          <li>Up to 20 participants</li>
+          <li>Slide deck included</li>
+          <li>Q&amp;A session</li>
+          <li>Certificate of attendance</li>
+        </ul>
+        <button class="pricing-btn" onclick="document.getElementById('consulting').scrollIntoView({behavior:'smooth'})">Book Now</button>
+      </div>
+      <div class="pricing-card featured">
+        <div class="pricing-plan">Full Workshop</div>
+        <div class="pricing-price">৳<sub></sub>Custom</div>
+        <div class="pricing-duration">Full Day (8 Hours)</div>
+        <ul class="pricing-features">
+          <li>2–3 topic modules</li>
+          <li>Up to 40 participants</li>
+          <li>Hands-on lab environment</li>
+          <li>Custom curriculum design</li>
+          <li>Post-training support (1 week)</li>
+          <li>Certificates provided</li>
+        </ul>
+        <button class="pricing-btn" onclick="document.getElementById('consulting').scrollIntoView({behavior:'smooth'})">Book Now</button>
+      </div>
+      <div class="pricing-card">
+        <div class="pricing-plan">Corporate Program</div>
+        <div class="pricing-price">৳<sub></sub>Custom</div>
+        <div class="pricing-duration">Multi-Week Program</div>
+        <ul class="pricing-features">
+          <li>Full syllabus design</li>
+          <li>Unlimited participants</li>
+          <li>Weekly live sessions</li>
+          <li>Lab infrastructure setup</li>
+          <li>Progress assessments</li>
+          <li>3-month support</li>
+          <li>Global cert prep (eJPT, CEH)</li>
+        </ul>
+        <button class="pricing-btn" onclick="document.getElementById('consulting').scrollIntoView({behavior:'smooth'})">Get Quote</button>
+      </div>
+    </div>
+    <div class="custom-note reveal">
+      💡 All pricing is fully customizable based on your organization's needs, team size, and training duration. <a href="#contact">Contact me</a> to discuss a custom package.
+    </div>
+  </div>
+</section>
+
+<!-- ── CONSULTING ── -->
+<section id="consulting">
+  <div class="section-header reveal">
+    <span class="section-tag">// 007 — Book a Session</span>
+    <h2 class="section-title">Security <span>Consulting</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="consulting-container">
+    <div class="consulting-intro reveal">
+      <p>Need expert eyes on your security posture? Book a 1-on-1 consulting session. Select your service, pick a date and time — I'll confirm within 24 hours.</p>
+    </div>
+    <div class="consult-grid">
+      <div class="consult-services reveal">
+        <div class="consult-service active" onclick="selectService(this,'Penetration Test Scoping')">
+          <div class="service-icon">🔍</div>
+          <div>
+            <div class="service-name">Pentest Scoping Call</div>
+            <div class="service-dur">60 min</div>
+            <div class="service-price">Free Discovery</div>
+          </div>
+        </div>
+        <div class="consult-service" onclick="selectService(this,'SOC Architecture Review')">
+          <div class="service-icon">🏰</div>
+          <div>
+            <div class="service-name">SOC Architecture Review</div>
+            <div class="service-dur">90 min</div>
+            <div class="service-price">Custom Quote</div>
+          </div>
+        </div>
+        <div class="consult-service" onclick="selectService(this,'Incident Response Consultation')">
+          <div class="service-icon">🚨</div>
+          <div>
+            <div class="service-name">Incident Response Help</div>
+            <div class="service-dur">60 min</div>
+            <div class="service-price">Urgent Available</div>
+          </div>
+        </div>
+        <div class="consult-service" onclick="selectService(this,'Career Mentorship Session')">
+          <div class="service-icon">🎯</div>
+          <div>
+            <div class="service-name">Career Mentorship</div>
+            <div class="service-dur">45 min</div>
+            <div class="service-price">৳999 / session</div>
+          </div>
+        </div>
+        <div class="consult-service" onclick="selectService(this,'Red Team Strategy Planning')">
+          <div class="service-icon">🔴</div>
+          <div>
+            <div class="service-name">Red Team Strategy</div>
+            <div class="service-dur">90 min</div>
+            <div class="service-price">Custom Quote</div>
+          </div>
+        </div>
+        <div class="consult-service" onclick="selectService(this,'Cloud Security Assessment')">
+          <div class="service-icon">☁️</div>
+          <div>
+            <div class="service-name">Cloud Security Review</div>
+            <div class="service-dur">60 min</div>
+            <div class="service-price">Custom Quote</div>
+          </div>
+        </div>
+      </div>
+      <div class="calendar-widget reveal">
+        <div class="cal-header">
+          <button class="cal-nav" onclick="changeMonth(-1)">‹</button>
+          <div class="cal-month" id="cal-month-label">April 2025</div>
+          <button class="cal-nav" onclick="changeMonth(1)">›</button>
+        </div>
+        <div class="cal-grid-header">
+          <div class="cal-day-name">Su</div><div class="cal-day-name">Mo</div><div class="cal-day-name">Tu</div>
+          <div class="cal-day-name">We</div><div class="cal-day-name">Th</div><div class="cal-day-name">Fr</div>
+          <div class="cal-day-name">Sa</div>
+        </div>
+        <div class="cal-grid" id="cal-grid"></div>
+        <div class="time-slots">
+          <h4>Available Time Slots (BST)</h4>
+          <div class="slots-grid" id="time-slots-grid">
+            <div class="time-slot available" onclick="selectTime(this,'09:00 AM')">09:00 AM</div>
+            <div class="time-slot available" onclick="selectTime(this,'10:00 AM')">10:00 AM</div>
+            <div class="time-slot available" onclick="selectTime(this,'11:00 AM')">11:00 AM</div>
+            <div class="time-slot available" onclick="selectTime(this,'02:00 PM')">02:00 PM</div>
+            <div class="time-slot available" onclick="selectTime(this,'03:00 PM')">03:00 PM</div>
+            <div class="time-slot available" onclick="selectTime(this,'04:00 PM')">04:00 PM</div>
+            <div class="time-slot available" onclick="selectTime(this,'07:00 PM')">07:00 PM</div>
+            <div class="time-slot available" onclick="selectTime(this,'08:00 PM')">08:00 PM</div>
+            <div class="time-slot available" onclick="selectTime(this,'09:00 PM')">09:00 PM</div>
+          </div>
+        </div>
+        <button class="book-btn" id="book-btn" onclick="bookSession()" disabled>Select a Date &amp; Time</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── COMMUNITY ── -->
+<section id="community">
+  <div class="section-header reveal">
+    <span class="section-tag">// 008 — Join the Network</span>
+    <h2 class="section-title">Community &amp; <span>Social</span></h2>
+    <div class="section-line"></div>
+  </div>
+  <div class="community-grid">
+    <a href="https://facebook.com/groups/hacktolive" target="_blank" class="community-card reveal">
+      <div class="comm-platform">
+        <div class="comm-icon">📘</div>
+        <div>
+          <div class="comm-name">Facebook Group</div>
+          <div class="comm-type">Hack To Live Community</div>
+        </div>
+      </div>
+      <div class="comm-desc">Main community hub for cybersecurity discussions, job postings, resource sharing, and peer support.</div>
+      <div class="comm-members">1,000+ Members</div>
+      <div class="comm-join">Join Group →</div>
+    </a>
+    <a href="https://wa.me/+8801765603356" target="_blank" class="community-card reveal">
+      <div class="comm-platform">
+        <div class="comm-icon">💬</div>
+        <div>
+          <div class="comm-name">WhatsApp Group</div>
+          <div class="comm-type">Student Study Group</div>
+        </div>
+      </div>
+      <div class="comm-desc">Active study group for students preparing for eJPT, CEH, and OSCP certifications. Daily challenges &amp; tips.</div>
+      <div class="comm-members">Active Members</div>
+      <div class="comm-join">Join Group →</div>
+    </a>
+    <a href="https://whatsapp.com/channel/hacktolive" target="_blank" class="community-card reveal">
+      <div class="comm-platform">
+        <div class="comm-icon">📣</div>
+        <div>
+          <div class="comm-name">WhatsApp Channel</div>
+          <div class="comm-type">Official Announcements</div>
+        </div>
+      </div>
+      <div class="comm-desc">Get instant updates on new courses, free resources, webinars, and cybersecurity news directly to WhatsApp.</div>
+      <div class="comm-members">Broadcast Channel</div>
+      <div class="comm-join">Follow Channel →</div>
+    </a>
+    <a href="https://discord.gg/hacktolive" target="_blank" class="community-card reveal">
+      <div class="comm-platform">
+        <div class="comm-icon">🎮</div>
+        <div>
+          <div class="comm-name">Discord Server</div>
+          <div class="comm-type">Hack To Live Academy</div>
+        </div>
+      </div>
+      <div class="comm-desc">Technical channels for CTF collaboration, tool sharing, lab help, and real-time study sessions with peers.</div>
+      <div class="comm-members">Active Server</div>
+      <div class="comm-join">Join Server →</div>
+    </a>
+    <a href="https://linkedin.com/company/hacktolive" target="_blank" class="community-card reveal">
+      <div class="comm-platform">
+        <div class="comm-icon">💼</div>
+        <div>
+          <div class="comm-name">LinkedIn Page</div>
+          <div class="comm-type">Hack To Live Academy</div>
+        </div>
+      </div>
+      <div class="comm-desc">Professional network for alumni, industry updates, job opportunities, and corporate training partnerships.</div>
+      <div class="comm-members">Professional Network</div>
+      <div class="comm-join">Follow Page →</div>
+    </a>
+    <a href="https://linkedin.com/in/mosabbirshemul" target="_blank" class="community-card reveal">
+      <div class="comm-platform">
+        <div class="comm-icon">👤</div>
+        <div>
+          <div class="comm-name">Personal LinkedIn</div>
+          <div class="comm-type">MD Mosabbir Hossain</div>
+        </div>
+      </div>
+      <div class="comm-desc">Connect with me personally for consulting inquiries, collaboration proposals, and professional networking.</div>
+      <div class="comm-members">Connect Directly</div>
+      <div class="comm-join">Connect →</div>
+    </a>
+  </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact">
+  <div class="contact-container">
+    <div class="reveal">
+      <span class="section-tag" style="display:block;text-align:center;margin-bottom:0.8rem;">// 009 — Initiate Contact</span>
+      <h2>Ready to Secure Your<br><span style="color:var(--green)">Digital Infrastructure?</span></h2>
+      <p>Whether you need a penetration test, SOC consultation, corporate training, or just want to talk security — I'm one message away.</p>
+    </div>
+    <div class="contact-grid reveal">
+      <div class="contact-item">
+        <div class="contact-item-icon">📧</div>
+        <div>
+          <div class="contact-label">Email</div>
+          <div class="contact-val">mosabbirshemul@gmail.com</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📱</div>
+        <div>
+          <div class="contact-label">Phone / WhatsApp</div>
+          <div class="contact-val">+88 01765603356</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">📍</div>
+        <div>
+          <div class="contact-label">Location</div>
+          <div class="contact-val">Gulshan 1, Dhaka, Bangladesh</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="contact-item-icon">⏰</div>
+        <div>
+          <div class="contact-label">Response Time</div>
+          <div class="contact-val">Within 24 hours</div>
+        </div>
+      </div>
+    </div>
+    <div class="contact-form reveal">
+      <div class="form-row">
+        <div class="form-group">
+          <label>Your Name</label>
+          <input type="text" placeholder="John Doe" id="contact-name">
+        </div>
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" placeholder="john@company.com" id="contact-email">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Inquiry Type</label>
+        <select id="contact-type">
+          <option value="">Select inquiry type...</option>
+          <option>Penetration Testing</option>
+          <option>SOC Consulting</option>
+          <option>Corporate Training</option>
+          <option>Course Enrollment</option>
+          <option>Career Mentorship</option>
+          <option>Speaking / Event</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Message</label>
+        <textarea rows="5" placeholder="Describe your security challenge or inquiry..." id="contact-msg"></textarea>
+      </div>
+      <button class="form-submit" onclick="sendMessage()">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+  <div class="footer-logo">MOSH<span style="color:var(--cyan)">SEC</span></div>
+  <div class="footer-copy">© 2025 Mosabbir Hossain · Built with 💀 in Dhaka, BD</div>
+  <div class="footer-socials">
+    <a href="https://linkedin.com/in/mosabbirshemul" target="_blank" class="footer-social">LinkedIn</a>
+    <a href="https://medium.com/@mosabbirshemul" target="_blank" class="footer-social">Medium</a>
+    <a href="https://youtube.com/@hacktolive" target="_blank" class="footer-social">YouTube</a>
+    <a href="https://hacktolive.org" target="_blank" class="footer-social">Academy</a>
+  </div>
+</footer>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── MATRIX RAIN ──
+const canvas = document.getElementById('matrix-bg');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+const cols = Math.floor(canvas.width / 18);
+const drops = Array(cols).fill(1);
+const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノ{}[]<>/\\|ABCDEF';
+function drawMatrix() {
+  ctx.fillStyle = 'rgba(2,4,8,0.05)';
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+  ctx.fillStyle = '#00ff88';
+  ctx.font = '14px Share Tech Mono';
+  drops.forEach((y,i) => {
+    const char = chars[Math.floor(Math.random()*chars.length)];
+    ctx.fillText(char, i*18, y*18);
+    if(y*18>canvas.height && Math.random()>0.975) drops[i]=0;
+    drops[i]++;
+  });
+}
+setInterval(drawMatrix, 50);
+window.addEventListener('resize', () => { canvas.width=window.innerWidth; canvas.height=window.innerHeight; });
+
+// ── SCROLL REVEAL ──
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ── SKILL BARS ──
+const barObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if(e.isIntersecting) {
+      e.target.querySelectorAll('.skill-bar-fill').forEach(bar => {
+        bar.style.width = bar.dataset.width + '%';
+      });
+    }
+  });
+}, { threshold: 0.3 });
+document.querySelectorAll('#about').forEach(el => barObserver.observe(el));
+
+// ── BLOG TABS ──
+function switchTab(tab) {
+  document.querySelectorAll('.blog-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.blog-content').forEach(c => c.classList.remove('active'));
+  event.target.classList.add('active');
+  document.getElementById('tab-' + tab).classList.add('active');
+}
+
+// ── CALENDAR ──
+let currentDate = new Date();
+let selectedDay = null;
+let selectedTime = null;
+let selectedService = 'Penetration Test Scoping';
+
+function renderCalendar() {
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const months = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('cal-month-label').textContent = months[month] + ' ' + year;
+  const grid = document.getElementById('cal-grid');
+  grid.innerHTML = '';
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month+1, 0).getDate();
+  const today = new Date();
+  for(let i=0;i<firstDay;i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day disabled';
+    grid.appendChild(empty);
+  }
+  for(let d=1;d<=daysInMonth;d++) {
+    const dayEl = document.createElement('div');
+    const thisDate = new Date(year, month, d);
+    const isToday = thisDate.toDateString() === today.toDateString();
+    const isPast = thisDate < today && !isToday;
+    const isWeekend = thisDate.getDay()===0 || thisDate.getDay()===6;
+    dayEl.className = 'cal-day ' + (isPast ? 'past' : isWeekend ? 'disabled' : 'available') + (isToday ? ' today' : '');
+    dayEl.textContent = d;
+    if(!isPast && !isWeekend) {
+      dayEl.onclick = () => selectDay(dayEl, d, year, month);
+    }
+    grid.appendChild(dayEl);
+  }
+}
+
+function selectDay(el, day, year, month) {
+  document.querySelectorAll('.cal-day').forEach(d => d.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedDay = new Date(year, month, day);
+  updateBookBtn();
+}
+
+function changeMonth(dir) {
+  currentDate.setMonth(currentDate.getMonth() + dir);
+  selectedDay = null;
+  renderCalendar();
+}
+
+function selectTime(el, time) {
+  document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedTime = time;
+  updateBookBtn();
+}
+
+function selectService(el, service) {
+  document.querySelectorAll('.consult-service').forEach(s => s.classList.remove('active'));
+  el.classList.add('active');
+  selectedService = service;
+}
+
+function updateBookBtn() {
+  const btn = document.getElementById('book-btn');
+  if(selectedDay && selectedTime) {
+    const opts = { weekday:'short', month:'short', day:'numeric' };
+    btn.textContent = `Book: ${selectedDay.toLocaleDateString('en-US',opts)} at ${selectedTime}`;
+    btn.disabled = false;
+  } else if(selectedDay) {
+    btn.textContent = 'Now Select a Time Slot';
+    btn.disabled = true;
+  } else {
+    btn.textContent = 'Select a Date & Time';
+    btn.disabled = true;
+  }
+}
+
+function bookSession() {
+  if(!selectedDay || !selectedTime) return;
+  const opts = { weekday:'long', month:'long', day:'numeric', year:'numeric' };
+  const dateStr = selectedDay.toLocaleDateString('en-US', opts);
+  const subject = encodeURIComponent(`Consulting Session: ${selectedService}`);
+  const body = encodeURIComponent(`Hi Mosabbir,\n\nI'd like to book a consulting session.\n\nService: ${selectedService}\nDate: ${dateStr}\nTime: ${selectedTime} BST\n\nPlease confirm this slot.\n\nThank you.`);
+  window.open(`mailto:mosabbirshemul@gmail.com?subject=${subject}&body=${body}`, '_blank');
+  showToast('📧 Booking email opened! I\'ll confirm within 24 hours.');
+}
+
+function sendMessage() {
+  const name = document.getElementById('contact-name').value;
+  const email = document.getElementById('contact-email').value;
+  const type = document.getElementById('contact-type').value;
+  const msg = document.getElementById('contact-msg').value;
+  if(!name || !email || !msg) { showToast('⚠ Please fill in all fields.'); return; }
+  const subject = encodeURIComponent(`[${type||'Inquiry'}] from ${name}`);
+  const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\nType: ${type}\n\nMessage:\n${msg}`);
+  window.open(`mailto:mosabbirshemul@gmail.com?subject=${subject}&body=${body}`, '_blank');
+  showToast('✅ Message sent! I\'ll respond within 24 hours.');
+}
+
+function showToast(msg) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 4000);
+}
+
+// Init
+renderCalendar();
+
+// ── NAV ACTIVE STATE ──
+window.addEventListener('scroll', () => {
+  const sections = document.querySelectorAll('section[id]');
+  const scrollY = window.scrollY + 100;
+  sections.forEach(sec => {
+    const top = sec.offsetTop, height = sec.offsetHeight;
+    const id = sec.getAttribute('id');
+    const link = document.querySelector(`.nav-links a[href="#${id}"]`);
+    if(link) {
+      if(scrollY >= top && scrollY < top + height) link.style.color = 'var(--green)';
+      else link.style.color = '';
+    }
+  });
+});
+</script>
+</body>
+</html>
